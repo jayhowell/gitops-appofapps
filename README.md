@@ -3,6 +3,24 @@ This demo is a demo to pull down multiple applications. You will need the follow
 - Openshift 4.18 or greater
 - Gitops installed
 - (optional) Advanced cluster manager installed on each cluster you want to deploy to.
+  
+**Tips:**
+- install the following to link argocd to your openshift login
+```
+cat << EOF | oc apply -f -
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: cluster-admins
+users:
+- admin
+EOF
+```
+- In order for Argocd to create namespaces you must give it permissions.
+```
+oc adm policy add-cluster-role-to-user cluster-admin \
+  system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller
+```
 
 **Steps for gitops:**
 - Go into the Gitops operator
