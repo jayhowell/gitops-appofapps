@@ -6,11 +6,32 @@ This demo is a demo to pull down multiple applications. You will need the follow
 
 **Steps for gitops:**
 - Go into the Gitops operator
-- Create an application that points to 
+- In the gui Create an application that points to 
   - URL: https://github.com/levenhagen/rocketchat-acm.git
   - Revision: main
   - Path: cluster
   - namespace: openshift-gitops
+- or add this Application yaml.
+```
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    path: manifests/cluster/
+    repoURL: https://github.com/jayhowell/gitops-appofapps.git
+    targetRevision: main
+  destination:
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
 
 **Steps for ACM**
 - go into ACM console
