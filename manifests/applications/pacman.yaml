@@ -1,17 +1,16 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bgd
+  name: pacman
   namespace: openshift-gitops
 spec:
   project: default
   source:
-    path: app/overlays/default/
-    repoURL: https://github.com/jayhowell/bgd
+    path: pacman
+    repoURL: https://github.com/jayhowell/pacman.git
     targetRevision: main
   destination:
-    namespace: bgd
+    namespace: pacman
     server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:
